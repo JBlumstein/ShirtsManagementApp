@@ -8,9 +8,22 @@ class ShirtsController < ApplicationController
   end
 
   def create
-    safe_params = params.require('shirt').permit(:name, :description, :image)
-    @shirt = Shirt.create(safe_params)
-    redirect_to @shirt
+    name = params[:shirt][:image_file].original_filename
+
+    directory = 'public/images'
+    path = File.join(directory, name)
+    File.open(path, "wb") do |f|
+      f.write params[:shirt][:image_file].read
+    end
+
+    safe_params = params.require('shirt').permit(:name, :description)
+    @shirt = Shirt.new(safe_params)
+    @shirt.image = name
+    if @shirt.save
+      redirect_to @shirt
+    else
+      render "new"
+    end
   end
 
   def search

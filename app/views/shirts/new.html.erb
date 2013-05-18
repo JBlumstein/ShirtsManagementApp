@@ -1,9 +1,16 @@
+<%= @shirt.errors.full_messages %>
 <%= form_for @shirt do |f| %>
+<fieldset>
   <%= f.label :name %>
   <%= f.text_field :name %>
+</fieldset>
+<fieldset>
   <%= f.label :description %>
-  <%= f.text_field :description %>
-  <%= f.label :image %>
-  <%= f.text_field :image %>
+  <%= f.text_area :description %>
+</fieldset>
+<fieldset>
+  <%= f.label :image_file %>
+  <%= f.file_field :image_file %>
+</fieldset>
   <%= f.submit %>
 <% end %>
